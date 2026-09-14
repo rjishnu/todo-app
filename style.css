@@ -5,49 +5,58 @@
 }
 
 :root {
-    --primary-color: #667eea;
-    --primary-dark: #764ba2;
-    --text-color: #333;
-    --bg-color: #fff;
-    --input-border: #ddd;
-    --item-bg: #f5f5f5;
-    --delete-color: #ff6b6b;
-    --delete-hover: #ff5252;
-    --clear-color: #ff9800;
-    --clear-hover: #e68900;
+    --primary-color: #2563eb;
+    --primary-dark: #1e40af;
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+    --bg-color: #f9fafb;
+    --container-bg: #ffffff;
+    --input-border: #e5e7eb;
+    --item-bg: #f3f4f6;
+    --delete-color: #dc2626;
+    --delete-hover: #b91c1c;
+    --clear-color: #ea580c;
+    --clear-hover: #c2410c;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 body.dark-mode {
-    --primary-color: #5a67d8;
-    --primary-dark: #6b46c1;
-    --text-color: #e0e0e0;
-    --bg-color: #1e1e1e;
-    --input-border: #444;
-    --item-bg: #2d2d2d;
-    --delete-color: #ff6b6b;
-    --delete-hover: #ff5252;
-    --clear-color: #ff9800;
-    --clear-hover: #e68900;
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --text-color: #f3f4f6;
+    --text-light: #d1d5db;
+    --bg-color: #111827;
+    --container-bg: #1f2937;
+    --input-border: #374151;
+    --item-bg: #2d3748;
+    --delete-color: #ef4444;
+    --delete-hover: #dc2626;
+    --clear-color: #f97316;
+    --clear-hover: #ea580c;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background: var(--bg-color);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     transition: background 0.3s ease;
+    color: var(--text-color);
 }
 
 .container {
-    background: var(--bg-color);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: var(--container-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -55,16 +64,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--input-border);
 }
 
 h1 {
     color: var(--text-color);
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     transition: color 0.3s ease;
+    letter-spacing: -0.5px;
 }
 
 .dark-mode-btn {
@@ -89,97 +102,108 @@ h1 {
 
 .stats {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     font-size: 14px;
-    color: var(--text-color);
-    opacity: 0.8;
+    color: var(--text-light);
+    background: var(--item-bg);
+    padding: 12px 16px;
+    border-radius: 8px;
 }
 
 .stats strong {
     color: var(--primary-color);
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .input-section {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
 #todoInput {
     flex: 1;
     min-width: 150px;
-    padding: 12px;
-    border: 2px solid var(--input-border);
+    padding: 14px 16px;
+    border: 1.5px solid var(--input-border);
     border-radius: 8px;
-    font-size: 16px;
-    background: var(--bg-color);
+    font-size: 15px;
+    background: var(--container-bg);
     color: var(--text-color);
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 #dueDate {
-    padding: 12px;
-    border: 2px solid var(--input-border);
+    padding: 14px 16px;
+    border: 1.5px solid var(--input-border);
     border-radius: 8px;
     font-size: 14px;
-    background: var(--bg-color);
+    background: var(--container-bg);
     color: var(--text-color);
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#todoInput::placeholder {
+    color: var(--text-light);
 }
 
 #todoInput:focus,
 #dueDate:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 #addBtn {
-    padding: 12px 20px;
+    padding: 14px 24px;
     background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 15px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
+    box-shadow: var(--shadow);
 }
 
 #addBtn:hover {
     background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .button-section {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .clear-btn {
     width: 100%;
-    padding: 12px;
+    padding: 12px 16px;
     background: var(--clear-color);
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 14px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    box-shadow: var(--shadow);
 }
 
 .clear-btn:hover {
     background: var(--clear-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
 }
 
 .todo-list {
@@ -188,13 +212,14 @@ h1 {
 
 .todo-item {
     background: var(--item-bg);
-    padding: 15px;
-    margin-bottom: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
     border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     transition: all 0.3s ease;
     animation: slideIn 0.3s ease;
 }
@@ -202,17 +227,17 @@ h1 {
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateX(-20px);
+        transform: translateY(-10px);
     }
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
 
 .todo-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
 }
 
 .todo-content {
@@ -227,6 +252,7 @@ h1 {
     font-weight: 500;
     color: var(--text-color);
     transition: color 0.3s ease;
+    font-size: 15px;
 }
 
 .todo-text:hover {
@@ -234,9 +260,11 @@ h1 {
 }
 
 .todo-date {
-    font-size: 12px;
-    color: var(--text-color);
-    opacity: 0.6;
+    font-size: 13px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .todo-item.completed {
@@ -251,20 +279,22 @@ h1 {
     background: var(--delete-color);
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: var(--shadow);
 }
 
 .delete-btn:hover {
     background: var(--delete-hover);
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 @media (max-width: 600px) {
