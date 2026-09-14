@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todo List App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK (Older version that works with script tags) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-check-circle"></i> My Todo List</h1>
+            <button id="darkModeToggle" class="dark-mode-btn" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <div class="stats">
+            <span><i class="fas fa-tasks"></i> Tasks: <strong id="taskCount">0</strong></span>
+        </div>
+
+        <div class="input-section">
+            <input type="text" id="todoInput" placeholder="Add a new task...">
+            <input type="date" id="dueDate">
+            <button id="addBtn"><i class="fas fa-plus"></i> Add</button>
+        </div>
+
+        <div class="button-section">
+            <button id="clearAllBtn" class="clear-btn">
+                <i class="fas fa-trash-alt"></i> Clear All
+            </button>
+        </div>
+
+        <ul id="todoList" class="todo-list"></ul>
+    </div>
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
