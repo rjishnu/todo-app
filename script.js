@@ -1,5 +1,9 @@
 const todoInput = document.getElementById('todoInput');
 const dueDate = document.getElementById('dueDate');
+const priority = document.getElementById('priority');
+const noteInput = document.getElementById('noteInput');
+const searchInput = document.getElementById('searchInput');
+const filterPriority = document.getElementById('filterPriority');
 const addBtn = document.getElementById('addBtn');
 const clearAllBtn = document.getElementById('clearAllBtn');
 const darkModeToggle = document.getElementById('darkModeToggle');
@@ -12,6 +16,8 @@ let todosRef; // Firebase reference
 addBtn.addEventListener('click', addTodo);
 clearAllBtn.addEventListener('click', clearAllTodos);
 darkModeToggle.addEventListener('click', toggleDarkMode);
+searchInput.addEventListener('input', renderTodos);
+filterPriority.addEventListener('change', renderTodos);
 todoInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') addTodo();
 });
@@ -108,6 +114,8 @@ function addTodo() {
     const todo = {
         id: Date.now(),
         text: text,
+        priority: priority.value,
+        notes: noteInput.value.trim(),
         dueDate: dueDate.value || 'No date',
         completed: false
     };
@@ -118,6 +126,8 @@ function addTodo() {
     renderTodos();
     todoInput.value = '';
     dueDate.value = '';
+    noteInput.value = '';
+    priority.value = 'medium';
 }
 
 function deleteTodo(id) {
@@ -151,13 +161,40 @@ function clearAllTodos() {
 
 function renderTodos() {
     todoList.innerHTML = '';
-    todos.forEach(todo => {
+    
+    // Get search and filter values
+    const searchTerm = searchInput.value.toLowerCase();
+    const filterValue = filterPriority.value;
+    
+    // Filter todos based on search and priority
+    const filteredTodos = todos.filter(todo => {
+        const matchesSearch = todo.text.toLowerCase().includes(searchTerm) || 
+                            (todo.notes && todo.notes.toLowerCase().includes(searchTerm));
+        const matchesPriority = !filterValue || todo.priority === filterValue;
+        return matchesSearch && matchesPriority;
+    });
+    
+    // Display filtered todos
+    filteredTodos.forEach(todo => {
         const li = document.createElement('li');
-        li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+        li.className = `todo-item ${todo.completed ? 'completed' : ''} priority-${todo.priority || 'medium'}`;
+        
+        const priorityIcon = {
+            'high': '🔴',
+            'medium': '🟡',
+            'low': '🟢'
+        }[todo.priority || 'medium'];
+        
+        const notesHtml = todo.notes ? `<div class="todo-notes"><i class="fas fa-sticky-note"></i> ${todo.notes}</div>` : '';
+        
         li.innerHTML = `
             <div class="todo-content">
-                <span class="todo-text">${todo.text}</span>
+                <div class="todo-header">
+                    <span class="priority-badge">${priorityIcon}</span>
+                    <span class="todo-text">${todo.text}</span>
+                </div>
                 <span class="todo-date"><i class="fas fa-calendar"></i> ${todo.dueDate}</span>
+                ${notesHtml}
             </div>
             <button class="delete-btn" data-id="${todo.id}"><i class="fas fa-trash"></i> Delete</button>
         `;
@@ -167,6 +204,14 @@ function renderTodos() {
 
         todoList.appendChild(li);
     });
+    
+    // Show message if no tasks match filter
+    if (filteredTodos.length === 0 && todos.length > 0) {
+        const emptyMsg = document.createElement('li');
+        emptyMsg.className = 'empty-message';
+        emptyMsg.innerHTML = '<p>No tasks match your search or filter</p>';
+        todoList.appendChild(emptyMsg);
+    }
 }
 
 loadTodos();
